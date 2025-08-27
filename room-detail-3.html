@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Sorrento - Ventura Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Assicuriamo che il menu desktop funzioni correttamente */
+        @media screen and (min-width: 901px) {
+            label { display: none !important; }
+            .nav-list {
+                display: flex !important;
+                position: static !important;
+                flex-direction: row !important;
+                background-color: transparent !important;
+                height: auto !important;
+                width: auto !important;
+                align-items: center !important;
+            }
+            .nav-item:not(:last-child) { margin-right: 3.5rem !important; }
+        }
+
+        /* Stili per il carosello delle immagini */
+        .room-detail {
+            padding: 80px 0;
+            background-color: var(--white-pinkish-color);
+        }
+
+        .carousel-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--main-color);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-prev {
+            left: 20px;
+        }
+
+        .carousel-next {
+            right: 20px;
+        }
+
+        .carousel-dots {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--main-color);
+        }
+
+        .room-detail-content {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--main-color);
+            text-align: center;
+        }
+
+        .room-detail-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: var(--main-color);
+            text-transform: uppercase;
+        }
+        
+        .room-detail-content h2 {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .room-description, .room-info-section {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .room-info-section h3 {
+            font-size: 2.2rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .room-info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .room-info-section ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .room-info-section ul li::before {
+            content: '·';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: var(--main-color);
+        }
+        
+        /* Stili per il pulsante WhatsApp */
+        .book-btn {
+             display: inline-block;
+             padding: 15px 30px;
+             background-color: #25d366;
+             color: white;
+             text-decoration: none;
+             border-radius: 50px;
+             font-size: 1.8rem;
+             font-weight: bold;
+             transition: all 0.3s ease;
+             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-btn:hover {
+            background: #128c7e;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-btn i {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel {
+                height: 250px;
+            }
+            
+            .room-detail-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .carousel-nav {
+                padding: 8px 12px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <i class="fas fa-home" style="margin-right: 8px; color: var(--main-color);"></i>Ventura Home
+            </a>
+            <input type="checkbox" id="check">
+            <label for="check">
+                <i class="fas fa-bars" id="open"></i>
+                <i class="fas fa-times" id="close"></i>
+            </label>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="rooms.html" class="nav-link">Rooms</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="rooms.html" class="nav-link book-btn">Book</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <section class="room-detail">
+        <div class="container">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-slide active">
+                        <img src="images/room-3.jpg" alt="Camera Sorrento - Vista Suite">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/room-4.jpg" alt="Camera Sorrento - Balcone">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/room-1.jpg" alt="Camera Sorrento - Bagno con vasca">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/room-5.jpg" alt="Camera Sorrento - Area relax">
+                    </div>
+                </div>
+                <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-nav carousel-next" onclick="changeSlide(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                </div>
+            </div>
+
+            <div class="room-detail-content">
+                <h1>Camera Sorrento</h1>
+                <h2>Suite Tripla – Eleganza e Comfort per un Soggiorno Unico</h2>
+                
+                <div class="room-description">
+                    <p>Ampia, luminosa e accogliente, la nostra Suite Tripla con doppio balcone è la scelta perfetta per famiglie, amici o gruppi di viaggiatori che desiderano vivere un'esperienza esclusiva, senza rinunciare alla comodità.</p>
+                    <p>Affacciata su una zona tranquilla e ben collegata, questa camera è ideale per chi desidera godere di spazi interni confortevoli e momenti di relax all’aria aperta. Situata a pochi passi dagli scavi archeologici di Pompei e dal Santuario della Beata Vergine del Rosario, questa suite ti offre il massimo del comfort e della privacy, per un soggiorno davvero speciale.</p>
+                </div>
+
+                <div class="room-info-section">
+                    <h3>Caratteristiche della suite:</h3>
+                    <ul>
+                        <li>1 letto matrimoniale + 1 letto singolo</li>
+                        <li>Due balconi privati con tavoli e poltrone, ideali per fare colazione all’aperto, leggere o semplicemente rilassarsi</li>
+                        <li>Area relax con comoda poltrona e luce soffusa</li>
+                        <li>Bagno privato con doccia, vasca, set di cortesia di alta qualità e asciugacapelli</li>
+                        <li>Aria condizionata e riscaldamento autonomo</li>
+                        <li>Wi-Fi gratuito ad alta velocità</li>
+                        <li>TV a schermo piatto</li>
+                        <li>Frigobar</li>
+                        <li>Tavolo da lavoro</li>
+                        <li>Set di biancheria da letto e da bagno inclusi</li>
+                    </ul>
+
+                    <h3>Servizi inclusi:</h3>
+                    <ul>
+                        <li>Deposito bagagli gratuito</li>
+                        <li>Mappa turistica e informazioni sulla città</li>
+                        <li>Possibilità di prenotare tour privati agli Scavi di Pompei, Vesuvio, Costiera Amalfitana e Napoli</li>
+                        <li>Ampio parcheggio privato</li>
+                    </ul>
+
+                    <h3>Servizi extra:</h3>
+                    <ul>
+                        <li>Pulizia giornaliera</li>
+                        <li>Colazione disponibile presso il bar convenzionato</li>
+                        <li>Ampia scelta di souvenir e prodotti tipici locali</li>
+                    </ul>
+                    
+                    <h3>Posizione:</h3>
+                    <p>La Suite Tripla è situata in una posizione centrale, a pochi minuti a piedi dalla stazione ferroviaria e dalle principali attrazioni turistiche. Ottimamente collegata con Napoli, Sorrento, e la Costiera Amalfitana.</p>
+                    <p>Rilassati in un ambiente spazioso, elegante e perfetto per ogni esigenza. La tua Suite SORRENTO ti aspetta per offrirti il massimo del comfort durante la tua visita a Pompei.</p>
+                </div>
+
+                <a href="https://wa.me/393123456789?text=Ciao! Vorrei prenotare la Camera Sorrento per le seguenti date:" class="book-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>Prenota Ora su WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="back-to-top">
+                <a href="#"><i class="fas fa-chevron-up"></i></a>
+            </div>
+            <div class="footer__content row">
+                <div class="col-3">
+                    <h4>Chi Siamo</h4>
+                    <p>Ventura Home a Pompei offre un'esperienza di soggiorno unica, combinando comfort moderno con l'autenticità del territorio. La nostra struttura è situata in posizione strategica per esplorare le meraviglie di Pompei.</p>
+                </div>
+                <div class="col-3">
+                    <h4>Metodi di Pagamento</h4>
+                    <p>Accettiamo tutti i principali metodi di pagamento per garantire la massima comodità</p>
+                    <ul class="payment-methods">
+                        <li><a href="#"><i class="fab fa-paypal"></i></a></li>
+                        <li><a href="#"><i class="fab fa-cc-visa"></i></a></li>
+                        <li><a href="#"><i class="fab fa-cc-mastercard"></i></a></li>
+                        <li><a href="#"><i class="fab fa-apple-pay"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h4>Seguici sui Social</h4>
+                    <p>Resta connesso con noi sui social media per aggiornamenti e offerte speciali.</p>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-tripadvisor"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let slideIndex = 1;
+
+        function changeSlide(n) {
+            showSlide(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
+
+        function showSlide(n) {
+            let slides = document.querySelectorAll('.carousel-slide');
+            let dots = document.querySelectorAll('.dot');
+            
+            if (n > slides.length) {
+                slideIndex = 1;
+            }
+            if (n < 1) {
+                slideIndex = slides.length;
+            }
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[slideIndex - 1].classList.add('active');
+            dots[slideIndex - 1].classList.add('active');
+        }
+
+        // Auto-slide ogni 5 secondi
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+    </script>
+</body>
+
+</html>

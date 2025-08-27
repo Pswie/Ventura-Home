@@ -310,6 +310,7 @@ label #close {
     color: var(--white-pinkish-color);
     padding: 1.5rem 3rem;
     transition: all .3s ease;
+    border-radius: 0; /* ensure rectangular button */
 }
 
 .book-btn:hover {
@@ -320,6 +321,25 @@ label #close {
 
 .book-btn:hover::before {
     transform: scaleX(0);
+}
+
+/* Secondary booking button (e.g., WhatsApp). Visually distinct but aligned with theme */
+.book-btn-2 {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+    border: .2rem solid var(--main-color);
+    background-color: transparent;
+    color: var(--main-color);
+    padding: 1.5rem 3rem;
+    transition: all .3s ease;
+    border-radius: 0; /* rectangle */
+    text-decoration: none;
+}
+
+.book-btn-2:hover {
+    background-color: var(--main-color);
+    color: var(--white-pinkish-color);
 }
 
 .hero {
